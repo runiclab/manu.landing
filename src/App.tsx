@@ -1,44 +1,119 @@
 import type { ReactNode } from 'react'
+import { GrainGradient } from '@paper-design/shaders-react'
+import avatarAya from './assets/avatar-aya.jpg'
+import avatarJin from './assets/avatar-jin.jpg'
+import avatarMara from './assets/avatar-mara.jpg'
+import './App.css'
 
-const features = [
-  ['01', 'Remember the little things.', 'Manu keeps the context around, so you can stay in the moment instead of keeping every tab open in your head.'],
-  ['02', 'Turn a thought into a plan.', 'From “what should I eat?” to “help me sort this out,” Manu makes the next step feel obvious.'],
-  ['03', 'Always one message away.', 'No new system to learn. No extra dashboard. Just a calm, capable assistant inside iMessage.'],
-]
+const Arrow = ({ diagonal = false }: { diagonal?: boolean }) => (
+  <svg aria-hidden="true" viewBox="0 0 16 16" className="arrow-icon">
+    {diagonal ? <path d="M4 12 12 4M6 4h6v6" /> : <path d="M3 8h10M9 4l4 4-4 4" />}
+  </svg>
+)
 
-function Arrow() { return <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">↗</span> }
+function ManuMark() {
+  return <span className="brand-mark" aria-hidden="true"><span /><span /><span /></span>
+}
 
-function Iphone() {
+function PhoneDemo() {
   return (
-    <div className="iphone-shadow relative mx-auto w-[235px] rotate-2 sm:w-[260px]">
-      <div className="rounded-[2.8rem] border-[7px] border-[#101010] bg-[#101010] p-1 shadow-2xl">
-        <div className="relative min-h-[465px] overflow-hidden rounded-[2.25rem] bg-[#f4f1eb] px-4 pb-4 pt-6 sm:min-h-[510px]">
-          <div className="absolute left-1/2 top-2 h-5 w-20 -translate-x-1/2 rounded-full bg-[#101010]" />
-          <div className="flex items-center justify-between px-1 text-[10px] font-medium text-black/45"><span>9:41</span><span>● ● ●</span></div>
-          <div className="mt-8 text-center"><div className="mx-auto flex h-9 w-9 items-center justify-center rounded-full bg-[#f15a3c] text-sm font-semibold text-white">m</div><p className="mt-2 text-[11px] font-medium">Manu</p><p className="text-[9px] text-black/35">iMessage</p></div>
-          <div className="mt-10 space-y-3 text-[11px] leading-4"><div className="ml-auto max-w-[83%] rounded-2xl rounded-br-md bg-[#e6f458] px-3 py-2.5 text-black/75">Can you make Friday easy?</div><div className="max-w-[88%] rounded-2xl rounded-bl-md bg-white px-3 py-2.5 text-black/65 shadow-sm">Absolutely. I’ll find somewhere relaxed and keep the options short.</div><div className="ml-auto max-w-[83%] rounded-2xl rounded-br-md bg-[#e6f458] px-3 py-2.5 text-black/75">You know me.</div></div>
-          <div className="absolute bottom-4 left-4 right-4 flex items-center gap-2 rounded-full border border-black/10 bg-white/70 px-3 py-2 text-[10px] text-black/35"><span className="flex-1">iMessage</span><span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#f15a3c] text-white">↑</span></div>
+    <div className="phone-wrap" aria-label="An example conversation with Manu">
+      <div className="phone-glow" />
+      <div className="phone">
+        <div className="phone-screen">
+          <div className="phone-status"><span>9:41</span><div className="dynamic-island" /><span>⌁ ▰</span></div>
+          <div className="contact">
+            <div className="contact-avatar"><ManuMark /></div>
+            <div><strong>Manu</strong><span>Always here</span></div>
+          </div>
+          <div className="conversation">
+            <p className="message outgoing">I have a packed Friday. Can you make it feel less chaotic?</p>
+            <div className="typing"><span /><span /><span /></div>
+            <div className="message incoming">
+              <p>On it. I moved your focus block, found the dinner thread, and kept 6–7pm clear.</p>
+              <div className="mini-plan"><span>FRI · 6:00 PM</span><strong>A little room to breathe</strong><small>Calendar updated</small></div>
+            </div>
+            <p className="message outgoing short">You get me.</p>
+          </div>
+          <div className="composer"><span>Message Manu</span><button aria-label="Send message"><Arrow /></button></div>
         </div>
       </div>
+      <div className="floating-note note-one"><span className="note-icon">✓</span><span><strong>Friday, sorted.</strong><small>3 things handled</small></span></div>
+      <div className="floating-note note-two"><span className="pulse" /><span><strong>Manu remembered</strong><small>You prefer quiet tables</small></span></div>
     </div>
   )
 }
 
+function PrincipleVisual({ kind }: { kind: 'memory' | 'action' | 'presence' }) {
+  if (kind === 'memory') return (
+    <svg className="principle-visual" viewBox="0 0 220 150" role="img" aria-label="Useful memories gathering into context">
+      <defs><linearGradient id="memoryGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#D8CAFF"/><stop offset="1" stopColor="#7757E9"/></linearGradient></defs>
+      <circle className="visual-orbit dashed" cx="110" cy="75" r="58" />
+      <circle className="visual-orbit" cx="110" cy="75" r="39" />
+      <path className="visual-thread" d="M59 52C78 43 82 29 94 19M148 49c16-8 22-3 32-15M81 104c-12 5-18 14-20 26" />
+      <g className="memory-node node-one"><circle cx="55" cy="53" r="9"/><circle cx="55" cy="50" r="2.5"/><path d="M50 58c1.8-4 8.2-4 10 0"/></g>
+      <g className="memory-node node-two"><circle cx="181" cy="34" r="8"/><path d="m177 34 2.5 2.5 5-5"/></g>
+      <g className="memory-node node-three"><circle cx="60" cy="131" r="8"/><path d="M56 131h8M60 127v8"/></g>
+      <circle className="core-ring" cx="110" cy="75" r="24" />
+      <circle cx="110" cy="75" r="17" fill="url(#memoryGlow)" />
+      <g className="core-manu-mark"><path d="M110 64v22M100.5 69.5l19 11M119.5 69.5l-19 11"/></g>
+      <rect className="visual-chip" x="137" y="106" width="55" height="20" rx="10"/><circle className="chip-dot" cx="149" cy="116" r="3"/><path className="chip-line" d="M157 113h22M157 119h15"/>
+    </svg>
+  )
+
+  if (kind === 'action') return (
+    <svg className="principle-visual" viewBox="0 0 220 150" role="img" aria-label="A thought becoming a completed action">
+      <defs><linearGradient id="actionGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#E4D9FF"/><stop offset="1" stopColor="#7657E9"/></linearGradient></defs>
+      <rect className="action-card back" x="31" y="38" width="74" height="61" rx="14" transform="rotate(-7 31 38)"/>
+      <rect className="action-card" x="35" y="31" width="78" height="64" rx="14"/>
+      <circle className="thought-dot" cx="55" cy="53" r="4"/><path className="thought-line" d="M67 49h27M67 57h19M51 74h43"/>
+      <path className="action-route" d="M112 67c19 0 18 27 35 27h14"/>
+      <circle className="route-dot" cx="128" cy="76" r="3"/><circle className="route-dot second" cx="143" cy="91" r="3"/>
+      <rect className="done-card" x="158" y="72" width="43" height="43" rx="13" fill="url(#actionGlow)"/>
+      <path className="done-check" d="m171 93 7 7 12-15"/>
+      <path className="motion-line" d="M147 51h39M154 43h21M151 59h29"/>
+      <rect className="visual-chip action-chip" x="64" y="111" width="92" height="21" rx="10.5"/><circle className="chip-dot" cx="78" cy="121.5" r="3"/><path className="chip-line" d="M87 118.5h51M87 124.5h33"/>
+    </svg>
+  )
+
+  return (
+    <svg className="principle-visual" viewBox="0 0 220 150" role="img" aria-label="A natural conversation across familiar messages">
+      <defs><linearGradient id="presenceGlow" x1="0" y1="0" x2="1" y2="1"><stop stopColor="#DCCFFF"/><stop offset="1" stopColor="#7454E5"/></linearGradient></defs>
+      <path className="signal-ring ring-one" d="M49 92c0-34 27-61 61-61s61 27 61 61"/>
+      <path className="signal-ring ring-two" d="M66 92c0-24 20-44 44-44s44 20 44 44"/>
+      <rect className="message-bubble left" x="25" y="46" width="58" height="34" rx="12"/>
+      <path className="bubble-tail" d="M35 78 31 88l14-9"/><path className="bubble-line" d="M39 57h29M39 65h20"/>
+      <rect className="message-bubble right" x="145" y="26" width="50" height="31" rx="11"/>
+      <path className="bubble-tail" d="m185 55 5 8-13-7"/><circle className="bubble-dot" cx="159" cy="41.5" r="2.5"/><circle className="bubble-dot" cx="170" cy="41.5" r="2.5"/><circle className="bubble-dot" cx="181" cy="41.5" r="2.5"/>
+      <circle className="presence-core" cx="110" cy="98" r="27" fill="url(#presenceGlow)"/>
+      <g className="presence-mark"><path d="M110 84v28M98 91l24 14M122 91l-24 14"/></g>
+      <circle className="online-dot" cx="129" cy="80" r="5"/><circle className="online-pulse" cx="129" cy="80" r="9"/>
+      <path className="base-line" d="M76 132h68"/>
+    </svg>
+  )
+}
+
+const examples = [
+  { time: '08:12', from: 'You', text: 'What does my day look like?', response: 'Two meetings, one deadline, and a gap at 4. Want me to protect it?', meta: 'CALENDAR · CHECKED' },
+  { time: '13:46', from: 'You', text: 'Find that thing Priya sent me.', response: 'The Lisbon list from March? Found it — I saved the four places she starred.', meta: 'MEMORY · FOUND' },
+  { time: '18:03', from: 'You', text: 'Dinner somewhere calm, not fussy.', response: 'I found three nearby. Luma has the quietest room and a table at 8:15.', meta: 'SEARCH · SHORTLISTED' },
+]
+
 function LegalSection({ title, children }: { title: string; children: ReactNode }) {
-  return <section className="border-t border-black/10 py-7 first:border-0 first:pt-0"><h2 className="text-lg font-medium tracking-[-.03em]">{title}</h2><div className="mt-3 space-y-3 text-sm leading-7 text-black/55">{children}</div></section>
+  return <section className="legal-section"><h2>{title}</h2><div>{children}</div></section>
 }
 
 function LegalPage({ kind }: { kind: 'privacy' | 'terms' }) {
   const privacy = kind === 'privacy'
-  return <main className="min-h-screen bg-[#f3f0e9] text-[#171716]"><nav className="mx-auto flex max-w-[900px] items-center justify-between px-6 py-7"><a href="/" className="text-[1.65rem] font-semibold tracking-[-.09em]">manu<span className="text-[#f15a3c]">.</span></a><a href="/" className="text-xs text-black/50 transition hover:text-black">Back home</a></nav><article className="mx-auto max-w-[900px] px-6 pb-20 pt-14"><p className="text-[11px] font-semibold uppercase tracking-[.24em] text-black/40">Runic Lab · Manu</p><h1 className="mt-5 max-w-2xl text-4xl font-medium leading-[.98] tracking-[-.07em] sm:text-6xl">{privacy ? 'Privacy, in plain language.' : 'The ground rules for using Manu.'}</h1><p className="mt-5 max-w-xl text-sm leading-7 text-black/55">{privacy ? 'How Runic Lab collects, uses, and protects information when you use Manu.' : 'These terms explain the agreement between you and Runic Lab when you use Manu.'}</p><p className="mt-3 text-xs text-black/35">Effective date: August 20, 2026</p><div className="mt-14 max-w-2xl">{privacy ? <PrivacyContent /> : <TermsContent />}</div></article><footer className="border-t border-black/10 px-6 py-6 text-center text-xs text-black/35"><a href="/privacy" className="hover:text-black">Privacy</a><span className="mx-2">·</span><a href="/terms" className="hover:text-black">Terms</a></footer></main>
+  return <main className="legal-page"><nav className="legal-nav"><a href="/" className="wordmark"><ManuMark />manu</a><a href="/">Back home</a></nav><article className="legal-article"><p className="eyebrow">Runic Lab · Manu</p><h1>{privacy ? 'Privacy, in plain language.' : 'The ground rules for using Manu.'}</h1><p className="legal-intro">{privacy ? 'How Runic Lab collects, uses, and protects information when you use Manu.' : 'These terms explain the agreement between you and Runic Lab when you use Manu.'}</p><p className="legal-date">Effective date: August 20, 2026</p><div className="legal-content">{privacy ? <PrivacyContent /> : <TermsContent />}</div></article><footer className="legal-footer"><a href="/privacy">Privacy</a><span>·</span><a href="/terms">Terms</a></footer></main>
 }
 
 function PrivacyContent() {
-  return <><LegalSection title="What Manu is"><p>Manu is an AI assistant from Runic Lab. You can talk to Manu through connected messaging channels and connect services so Manu can help you with tasks.</p></LegalSection><LegalSection title="Information we collect"><p>We collect the information needed to operate Manu, including your account details, display name, email address, connected channel identities, messages sent to or from Manu, saved memories, and connected integration details.</p><p>When you connect Google services, we receive the permissions and account information you approve through Google OAuth. We store the credentials needed to keep the connection working, encrypted at rest.</p></LegalSection><LegalSection title="How we use information"><p>We use information to authenticate you, keep your channels connected, respond to your messages, run requested integrations, personalize responses, maintain memories you ask Manu to keep, prevent abuse, and improve reliability.</p><p>We do not sell your personal information. We do not use your Gmail or Calendar data for advertising.</p></LegalSection><LegalSection title="Google data"><p>Manu only accesses Google data after you explicitly connect a Google service and approve the requested permissions. Gmail and Calendar access is used to provide the features you request. You can disconnect either service from your Manu dashboard at any time.</p></LegalSection><LegalSection title="Sharing and service providers"><p>We share information with service providers only when needed to operate Manu, such as infrastructure, database, messaging, authentication, AI model, and connected integration providers.</p></LegalSection><LegalSection title="Retention and control"><p>We retain account and message information while your account is active or as needed to provide Manu. You can disconnect integrations, delete saved memories, or ask us to delete your account and associated data.</p></LegalSection><LegalSection title="Security"><p>We use reasonable safeguards, including encrypted storage for integration credentials. No online service can promise absolute security, so please do not send passwords, private keys, or other secrets to Manu.</p></LegalSection><LegalSection title="Contact"><p>Questions or deletion requests can be sent to <a className="underline decoration-[#f15a3c] underline-offset-4" href="mailto:privacy@manu.so">privacy@manu.so</a>.</p></LegalSection></>
+  return <><LegalSection title="What Manu is"><p>Manu is an AI assistant from Runic Lab. You can talk to Manu through connected messaging channels and connect services so Manu can help you with tasks.</p></LegalSection><LegalSection title="Information we collect"><p>We collect the information needed to operate Manu, including your account details, display name, email address, connected channel identities, messages sent to or from Manu, saved memories, and connected integration details.</p><p>When you connect Google services, we receive the permissions and account information you approve through Google OAuth. We store the credentials needed to keep the connection working, encrypted at rest.</p></LegalSection><LegalSection title="How we use information"><p>We use information to authenticate you, keep your channels connected, respond to your messages, run requested integrations, personalize responses, maintain memories you ask Manu to keep, prevent abuse, and improve reliability.</p><p>We do not sell your personal information. We do not use your Gmail or Calendar data for advertising.</p></LegalSection><LegalSection title="Google data"><p>Manu only accesses Google data after you explicitly connect a Google service and approve the requested permissions. Gmail and Calendar access is used to provide the features you request. You can disconnect either service from your Manu dashboard at any time.</p></LegalSection><LegalSection title="Sharing and service providers"><p>We share information with service providers only when needed to operate Manu, such as infrastructure, database, messaging, authentication, AI model, and connected integration providers.</p></LegalSection><LegalSection title="Retention and control"><p>We retain account and message information while your account is active or as needed to provide Manu. You can disconnect integrations, delete saved memories, or ask us to delete your account and associated data.</p></LegalSection><LegalSection title="Security"><p>We use reasonable safeguards, including encrypted storage for integration credentials. No online service can promise absolute security, so please do not send passwords, private keys, or other secrets to Manu.</p></LegalSection><LegalSection title="Contact"><p>Questions or deletion requests can be sent to <a href="mailto:privacy@manu.so">privacy@manu.so</a>.</p></LegalSection></>
 }
 
 function TermsContent() {
-  return <><LegalSection title="Using Manu"><p>You may use Manu if you can legally enter into this agreement. You are responsible for the messages, instructions, and connected accounts you use with Manu.</p></LegalSection><LegalSection title="AI-generated responses"><p>Manu uses AI models and connected services to respond to you. Responses can be incomplete or incorrect, so review important information before relying on it. Manu is not a substitute for professional legal, medical, financial, or other expert advice.</p></LegalSection><LegalSection title="Connected services"><p>When you connect a service, you authorize Manu to use the permissions you approve. You are responsible for reviewing actions before they are taken, especially actions that send messages, create events, change records, or place orders.</p></LegalSection><LegalSection title="Acceptable use"><p>Do not use Manu to break the law, impersonate another person, abuse connected services, access accounts without permission, transmit malicious code, or interfere with Manu or its providers.</p></LegalSection><LegalSection title="Your content"><p>You keep ownership of the content you send to Manu. You give Runic Lab the limited permission needed to process that content, operate the service, provide requested features, and maintain the security and reliability of Manu.</p></LegalSection><LegalSection title="Availability and changes"><p>Manu is provided while we continue developing the service. Features, integrations, and availability may change. We may update these terms when the service changes.</p></LegalSection><LegalSection title="Contact"><p>Questions about these terms can be sent to <a className="underline decoration-[#f15a3c] underline-offset-4" href="mailto:hello@manu.so">hello@manu.so</a>.</p></LegalSection></>
+  return <><LegalSection title="Using Manu"><p>You may use Manu if you can legally enter into this agreement. You are responsible for the messages, instructions, and connected accounts you use with Manu.</p></LegalSection><LegalSection title="AI-generated responses"><p>Manu uses AI models and connected services to respond to you. Responses can be incomplete or incorrect, so review important information before relying on it. Manu is not a substitute for professional legal, medical, financial, or other expert advice.</p></LegalSection><LegalSection title="Connected services"><p>When you connect a service, you authorize Manu to use the permissions you approve. You are responsible for reviewing actions before they are taken, especially actions that send messages, create events, change records, or place orders.</p></LegalSection><LegalSection title="Acceptable use"><p>Do not use Manu to break the law, impersonate another person, abuse connected services, access accounts without permission, transmit malicious code, or interfere with Manu or its providers.</p></LegalSection><LegalSection title="Your content"><p>You keep ownership of the content you send to Manu. You give Runic Lab the limited permission needed to process that content, operate the service, provide requested features, and maintain the security and reliability of Manu.</p></LegalSection><LegalSection title="Availability and changes"><p>Manu is provided while we continue developing the service. Features, integrations, and availability may change. We may update these terms when the service changes.</p></LegalSection><LegalSection title="Contact"><p>Questions about these terms can be sent to <a href="mailto:hello@manu.so">hello@manu.so</a>.</p></LegalSection></>
 }
 
 function App() {
@@ -47,18 +122,60 @@ function App() {
   if (path === '/terms') return <LegalPage kind="terms" />
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#f3f0e9] text-[#171716] selection:bg-[#e6f458]">
-      <nav className="relative z-10 mx-auto flex max-w-[1280px] items-center justify-between px-6 py-6 md:px-10 lg:px-14"><a href="/" className="text-[1.65rem] font-semibold tracking-[-.09em]">manu<span className="text-[#f15a3c]">.</span></a><div className="hidden items-center gap-8 text-[13px] text-black/50 md:flex"><a className="transition hover:text-black" href="#why-manu">Why Manu</a><a className="transition hover:text-black" href="#how-it-works">How it works</a></div><a href="mailto:hello@manu.so" className="group flex items-center gap-2 rounded-full border border-black/20 px-4 py-2 text-[13px] font-medium text-[#171716] transition hover:border-[#f15a3c] hover:bg-[#f15a3c] hover:text-white">Get early access <Arrow /></a></nav>
+    <main className="site-shell">
+      <section className="hero" id="top">
+        <div className="grain" aria-hidden="true">
+          <GrainGradient width="100%" height="100%" colors={['#7c3cff', '#c066ff', '#ee8dcf', '#455cff']} colorBack="#090714" softness={0.58} intensity={0.72} noise={0.17} shape="corners" speed={0.18} scale={1.05} />
+        </div>
+        <div className="hero-vignette" />
+        <nav className="main-nav">
+          <a href="#top" className="wordmark light"><ManuMark />manu</a>
+          <div className="nav-links"><a href="#why">Why Manu</a><a href="#possibilities">Possibilities</a><a href="#privacy">Privacy</a></div>
+          <a href="mailto:hello@manu.so?subject=Early access to Manu" className="nav-cta">Get early access <Arrow diagonal /></a>
+        </nav>
 
-      <section className="relative mx-auto max-w-[1280px] px-6 pb-28 pt-20 text-center md:px-10 lg:pb-36 lg:pt-28"><div className="pointer-events-none absolute left-1/2 top-20 h-[28rem] w-[42rem] -translate-x-1/2 rounded-full bg-[#f15a3c]/10 blur-3xl" /><div className="relative z-10 mx-auto max-w-4xl"><div className="mx-auto mb-7 flex w-fit items-center gap-2 rounded-full border border-black/15 px-4 py-2 text-[11px] font-medium text-black/55"><span className="h-1.5 w-1.5 rounded-full bg-[#f15a3c]" /> Your assistant, for real life</div><h1 className="mx-auto max-w-4xl text-[4.1rem] font-medium leading-[.91] tracking-[-.08em] sm:text-7xl lg:text-[7.2rem]">Make room for <em className="font-serif font-normal text-[#f15a3c]">more.</em></h1><p className="mx-auto mt-7 max-w-lg text-base leading-7 text-black/55 sm:text-lg">Manu helps you think, plan, and get things done — right from the place you already message.</p><div className="mt-9 flex flex-wrap items-center justify-center gap-3"><a href="mailto:hello@manu.so" className="group flex items-center gap-3 rounded-full bg-[#171716] px-6 py-3.5 text-sm font-medium text-white transition hover:bg-[#f15a3c]">Meet Manu <span className="flex h-6 w-6 items-center justify-center rounded-full bg-white/15"><Arrow /></span></a><a href="#how-it-works" className="rounded-full border border-black/20 px-6 py-3.5 text-sm font-medium text-[#171716] transition hover:border-black hover:bg-white">See how it works</a></div></div><div className="relative z-10 mx-auto mt-16 w-fit"><div className="absolute -left-24 top-20 hidden -rotate-6 rounded-xl bg-[#e6f458] px-4 py-3 text-xs font-medium shadow-lg sm:block">Keeps up with you.</div><Iphone /><div className="absolute -right-24 bottom-12 hidden rotate-6 rounded-xl border border-black/10 bg-white px-4 py-3 text-xs font-medium shadow-lg sm:block">Less juggling.<br /><span className="text-black/40">More living.</span></div></div><div className="mt-20 flex items-center justify-between border-t border-black/10 pt-5 text-left text-[10px] font-medium uppercase tracking-[.2em] text-black/35"><span>Scroll to explore</span><span>01 — 03</span></div></section>
+        <div className="hero-content">
+          <div className="hero-copy">
+            <p className="availability"><span /> Private beta · iMessage first</p>
+            <h1>Life moves fast.<br /><em>Manu keeps up.</em></h1>
+            <p className="hero-sub">A personal assistant that remembers what matters, handles the follow-through, and is always one message away.</p>
+            <div className="hero-actions"><a href="mailto:hello@manu.so?subject=Early access to Manu" className="button primary">Meet Manu <Arrow /></a><a href="#why" className="text-link">See what Manu can do <Arrow /></a></div>
+            <div className="hero-trust"><div className="avatar-stack" aria-hidden="true"><img src={avatarAya} alt="" /><img src={avatarJin} alt="" /><img src={avatarMara} alt="" /></div><p><strong>Built for real life</strong><br />Not another app to manage.</p></div>
+          </div>
+          <PhoneDemo />
+        </div>
+        <div className="hero-foot"><span>Thoughtful by design</span><span>Scroll to meet Manu ↓</span></div>
+      </section>
 
-      <section id="why-manu" className="border-y border-black/10 bg-white px-6 py-24 md:px-10 lg:px-14 lg:py-32"><div className="mx-auto grid max-w-[1280px] gap-10 lg:grid-cols-[.55fr_1.45fr]"><p className="text-[11px] font-semibold uppercase tracking-[.24em] text-black/40">Why Manu</p><div><h2 className="max-w-4xl text-4xl font-medium leading-[.96] tracking-[-.07em] sm:text-6xl lg:text-7xl">A little more headspace for the things that matter.</h2><p className="mt-8 max-w-xl text-lg leading-8 text-black/50">Life is already full of tabs, reminders, and half-finished thoughts. Manu helps turn all that noise into momentum.</p></div></div></section>
+      <section className="intro" id="why">
+        <div className="section-label"><span>01</span><p>Why Manu</p></div>
+        <div className="intro-copy"><p className="kicker">Your life is not a dashboard.</p><h2>Less managing.<br /><em>More living.</em></h2><p>Manu turns the loose ends of everyday life into finished business — quietly, thoughtfully, and in the background.</p></div>
+      </section>
 
-      <section id="how-it-works" className="mx-auto max-w-[1280px] px-6 py-24 md:px-10 lg:px-14 lg:py-36"><div className="grid gap-14 lg:grid-cols-[.55fr_1.45fr]"><div><p className="text-[11px] font-semibold uppercase tracking-[.24em] text-black/40">Built around you</p><p className="mt-8 max-w-xs text-sm leading-6 text-black/45">The best assistant feels less like software and more like someone who knows how you think.</p></div><div className="divide-y divide-black/10">{features.map(([number, title, copy]) => <article key={number} className="grid gap-5 py-8 first:pt-0 sm:grid-cols-[70px_1fr] sm:gap-8"><span className="text-xs font-medium text-[#f15a3c]">{number}</span><div className="grid gap-5 md:grid-cols-[1fr_.8fr] md:gap-10"><h3 className="max-w-md text-3xl font-medium leading-[.98] tracking-[-.055em] sm:text-4xl">{title}</h3><p className="max-w-sm text-sm leading-6 text-black/48">{copy}</p></div></article>)}</div></div></section>
+      <section className="principles">
+        <article><span className="principle-number">01</span><PrincipleVisual kind="memory" /><h3>It remembers<br />the right things.</h3><p>Your preferences, your people, your pace. Manu builds useful context over time, so every conversation starts a little further ahead.</p><span className="tiny-label">CONTEXT, NOT CLUTTER</span></article>
+        <article><span className="principle-number">02</span><PrincipleVisual kind="action" /><h3>It moves things<br />forward.</h3><p>From finding the detail to making the plan, Manu helps with the part after “I should probably…” — and keeps you in control.</p><span className="tiny-label">THOUGHT INTO ACTION</span></article>
+        <article><span className="principle-number">03</span><PrincipleVisual kind="presence" /><h3>It meets you<br />where you are.</h3><p>No new habits. No complicated setup. Talk to Manu where you already talk, in words that feel completely natural.</p><span className="tiny-label">ONE MESSAGE AWAY</span></article>
+      </section>
 
-      <section className="px-6 pb-24 md:px-10 lg:px-14 lg:pb-32"><div className="pixel-cta relative mx-auto max-w-[1280px] overflow-hidden rounded-[2rem] px-6 py-20 text-center text-white sm:px-10 lg:py-28"><div className="relative z-10 mx-auto max-w-2xl"><p className="mb-5 text-[11px] font-semibold uppercase tracking-[.24em] text-white/55">Start somewhere</p><h2 className="text-5xl font-medium leading-[.92] tracking-[-.07em] sm:text-7xl">Ready to make a little more room?</h2><p className="mx-auto mt-6 max-w-md text-sm leading-6 text-white/55">Join the early list for Manu. Your future self will thank you.</p><a href="mailto:hello@manu.so" className="mt-8 inline-flex items-center gap-3 rounded-full bg-white px-6 py-3.5 text-sm font-medium text-[#171716] transition hover:bg-[#e6f458]">Get early access <Arrow /></a></div></div></section>
+      <section className="possibilities" id="possibilities">
+        <div className="possibilities-head"><div className="section-label light-label"><span>02</span><p>In the everyday</p></div><h2>Small asks.<br /><em>Real relief.</em></h2><p>The best help does not make a show of itself. It just makes the day feel lighter.</p></div>
+        <div className="chat-list">
+          {examples.map((item, index) => <article className="chat-row" key={item.time}><div className="chat-index">0{index + 1}</div><div className="chat-time">{item.time}</div><div className="chat-exchange"><p className="ask"><span>{item.from}</span>{item.text}</p><p className="reply"><span className="reply-mark"><ManuMark /></span>{item.response}</p></div><div className="chat-meta">{item.meta}<span>DONE</span></div></article>)}
+        </div>
+      </section>
 
-      <footer className="relative h-[330px] overflow-hidden bg-[#171716] px-6 pt-10 text-white md:px-10 lg:px-14"><div className="relative z-10 mx-auto flex max-w-[1280px] items-start justify-between text-sm"><span className="font-medium">manu<span className="text-[#f15a3c]">.</span></span><div className="flex gap-8 text-white/45"><a className="transition hover:text-white" href="mailto:hello@manu.so">Contact</a><a className="transition hover:text-white" href="#why-manu">About</a></div></div><div className="pointer-events-none absolute bottom-[-.13em] left-1/2 -translate-x-1/2 whitespace-nowrap text-[31vw] font-semibold leading-[.7] tracking-[-.07em] text-white/[.065] sm:text-[27vw]">MANU</div><div className="absolute bottom-5 left-6 right-6 z-10 flex justify-between border-t border-white/10 pt-4 text-[11px] text-white/35 md:left-10 md:right-10 lg:left-14 lg:right-14"><span>© {new Date().getFullYear()} Manu</span><span>Made for the moments between messages.</span></div></footer>
+      <section className="privacy-section" id="privacy">
+        <div className="privacy-visual"><div className="orbit orbit-one" /><div className="orbit orbit-two" /><div className="privacy-core"><ManuMark /><span>Yours stays yours.</span></div></div>
+        <div className="privacy-copy"><p className="eyebrow">Private by default</p><h2>Helpful should never feel intrusive.</h2><p>Manu is designed around trust. Your information is used to help you — never sold, never turned into ads, and always under your control.</p><div className="privacy-points"><span><i>✓</i> You choose what Manu remembers</span><span><i>✓</i> Connected accounts stay in your control</span><span><i>✓</i> Your data is encrypted</span></div><a href="/privacy" className="text-link dark-link">Read our privacy promise <Arrow /></a></div>
+      </section>
+
+      <section className="final-cta">
+        <div className="cta-grain" aria-hidden="true"><GrainGradient width="100%" height="100%" colors={['#8b45ff', '#d66ee8', '#545dff']} colorBack="#0b0815" softness={0.55} intensity={0.7} noise={0.2} shape="corners" speed={0.15} scale={1.15} /></div>
+        <div className="cta-content"><p className="eyebrow">A little more room</p><h2>Let Manu take it<br /><em>from here.</em></h2><p>Join the private beta and bring a little more ease to every day.</p><a href="mailto:hello@manu.so?subject=Early access to Manu" className="button light-button">Get early access <Arrow diagonal /></a></div>
+      </section>
+
+      <footer><div className="footer-top"><a href="#top" className="wordmark"><ManuMark />manu</a><p>Your personal assistant,<br />one message away.</p><div className="footer-links"><a href="#why">Why Manu</a><a href="#possibilities">Possibilities</a><a href="mailto:hello@manu.so">Contact</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></div></div><div className="footer-bottom"><span>© {new Date().getFullYear()} Runic Lab</span><span>Made thoughtfully, for real life.</span><span>Lagos · Everywhere</span></div></footer>
     </main>
   )
 }
